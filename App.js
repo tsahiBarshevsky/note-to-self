@@ -7,6 +7,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './components/HomeScreen/HomeScreen';
 import Insertion from './components/Insertion/Insertion';
 
+import { I18nManager } from 'react-native';
+I18nManager.allowRTL(false);
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {

@@ -12,10 +12,30 @@ export const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'center',
     },
+    backButton: {
+        borderRadius: 50,
+        width: 40,
+        height: 40,
+        marginRight: 15
+    },
+    text: {
+        color: 'white'
+    },
     input: {
+        borderRadius: 10
+    },
+    listItem: {
+
+    },
+    backdrop: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
+    card: {
+        backgroundColor: primary,
+        borderColor: primary,
         borderRadius: 10
     }
 });

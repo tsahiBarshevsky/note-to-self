@@ -3,6 +3,7 @@ import { SafeAreaView, Text, View } from 'react-native';
 import { Button, Icon } from '@ui-kitten/components';
 import { getLists } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
+import List from '../List/List';
 
 const PlusIcon = (props) => (
     <Icon name='plus' fill='#ffffff' {...props} />
@@ -34,14 +35,15 @@ export default HomeScreen = ({ navigation }) => {
             </View>
             {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
                 return (
-                    <View key={list.key}>
-                        <Text style={{ color: 'white' }}>{list.properties.name}</Text>
-                        {Array.from(list.properties.items, ([key, items]) => ({ key, items })).map((item) => {
-                            return (
-                                <Text key={item.key} style={{ color: 'white' }}>{item.items.value}</Text>
-                            )
-                        })}
-                    </View>
+                    <List key={list.key} id={list.key} list={list.properties} />
+                    // <View key={list.key}>
+                    //     <Text style={{ color: 'white' }}>{list.properties.name}</Text>
+                    //     {Array.from(list.properties.items, ([key, items]) => ({ key, items })).map((item) => {
+                    //         return (
+                    //             <Text key={item.key} style={{ color: 'white' }}>{item.items.value}</Text>
+                    //         )
+                    //     })}
+                    // </View>
                 )
             })}
         </SafeAreaView>

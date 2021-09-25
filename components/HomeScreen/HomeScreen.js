@@ -35,15 +35,13 @@ export default HomeScreen = ({ navigation }) => {
             </View>
             {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
                 return (
-                    <List key={list.key} id={list.key} list={list.properties} />
-                    // <View key={list.key}>
-                    //     <Text style={{ color: 'white' }}>{list.properties.name}</Text>
-                    //     {Array.from(list.properties.items, ([key, items]) => ({ key, items })).map((item) => {
-                    //         return (
-                    //             <Text key={item.key} style={{ color: 'white' }}>{item.items.value}</Text>
-                    //         )
-                    //     })}
-                    // </View>
+                    <List
+                        key={list.key}
+                        id={list.key}
+                        list={list.properties}
+                        lists={lists}
+                        setLists={setLists}
+                    />
                 )
             })}
         </SafeAreaView>

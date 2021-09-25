@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 import { Button, Input, Icon, Modal, Card, Divider } from '@ui-kitten/components';
 import uuid from 'react-native-uuid';
 import { styles } from './InsertionStyles';
+import { getLists, replacer, setLists } from '../../AsyncStorageHandler';
 
 const ArrowIcon = (props) => (
     <Icon name='chevron-left' fill='#fff' {...props} />
@@ -43,14 +44,30 @@ export default Insertion = ({ navigation }) => {
         setItems(new Map(map));
     }
 
-    const saveList = () => {
+    const saveList = async () => {
+        // create list object
         const list = {
             name: name,
             pinned: false,
             lastUpdate: new Date(),
             items: items
         };
-        console.log(list);
+        getLists().then((storage) => {
+            if (storage === null) // First insertion
+            {
+                const map = new Map().set(uuid.v4(), list);
+                const jsonMap = JSON.stringify(map, replacer);
+                setLists(jsonMap);
+                alert("First list inserted");
+            }
+            else // Insert to existing map
+            {
+                storage.set(uuid.v4(), list);
+                const jsonMap = JSON.stringify(storage, replacer);
+                setLists(jsonMap);
+                alert("New list inserted to existing map");
+            }
+        });
     }
 
     return (

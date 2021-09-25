@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import { Button, Icon } from '@ui-kitten/components';
+import { getLists } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
 
 const PlusIcon = (props) => (
@@ -12,6 +13,13 @@ const SearchIcon = (props) => (
 );
 
 export default HomeScreen = ({ navigation }) => {
+
+    const [lists, setLists] = useState('');
+
+    const storeData = () => {
+        getLists().then((res) => setLists(res));
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -22,8 +30,20 @@ export default HomeScreen = ({ navigation }) => {
                     style={styles.addButton}
                     onPress={() => navigation.navigate('Insertion')} />
                 <Text style={{ color: 'white' }}>Note To Self</Text>
-                <Button accessoryLeft={SearchIcon} size="tiny" appearance="ghost" style={styles.addButton} />
+                <Button onPress={() => storeData()} accessoryLeft={SearchIcon} size="tiny" appearance="ghost" style={styles.addButton} />
             </View>
+            {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
+                return (
+                    <View key={list.key}>
+                        <Text style={{ color: 'white' }}>{list.properties.name}</Text>
+                        {Array.from(list.properties.items, ([key, items]) => ({ key, items })).map((item) => {
+                            return (
+                                <Text key={item.key} style={{ color: 'white' }}>{item.items.value}</Text>
+                            )
+                        })}
+                    </View>
+                )
+            })}
         </SafeAreaView>
     )
 }

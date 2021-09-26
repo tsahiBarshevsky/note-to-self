@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, CheckBox } from '@ui-kitten/components';
-import { View, Text } from 'react-native';
+import { Button } from '@ui-kitten/components';
+import { View, Text, CheckBox } from 'react-native';
 import { styles } from './ListStyles';
 import { replacer, setLists as updateStorage } from '../../AsyncStorageHandler';
 
@@ -13,7 +13,6 @@ const List = ({ id, list, lists, setLists }) => {
     }, { completed: [], uncompleted: [] });
 
     const updateStatus = (itemID) => {
-        console.log(itemID)
         const listObject = lists.get(id);
         const listItem = listObject.items.get(itemID);
         let updated;
@@ -36,26 +35,29 @@ const List = ({ id, list, lists, setLists }) => {
             <Text>{list.name}</Text>
             {divided.uncompleted.map((item) => {
                 return (
-                    <CheckBox
-                        key={item.key}
-                        checked={item.items.completed}
-                        style={{ marginVertical: 5 }}
-                    >
-                        {item.items.value}
-                    </CheckBox>
+                    <View key={item.key} style={styles.checkboxContainer}>
+                        <CheckBox
+                            value={item.items.completed}
+                            onValueChange={() => updateStatus(item.key)}
+                        />
+                        <Text style={styles.labelUncompleted}>
+                            {item.items.value}
+                        </Text>
+                    </View>
                 )
             })}
             <Text>Completed items</Text>
             {divided.completed.map((item) => {
                 return (
-                    <CheckBox
-                        key={item.key}
-                        onChange={() => updateStatus(item.key)}
-                        checked={item.items.completed}
-                        style={{ marginVertical: 5 }}
-                    >
-                        {item.items.value}
-                    </CheckBox>
+                    <View key={item.key} style={styles.checkboxContainer}>
+                        <CheckBox
+                            value={item.items.completed}
+                            onValueChange={() => updateStatus(item.key)}
+                        />
+                        <Text style={styles.labelCompleted}>
+                            {item.items.value}
+                        </Text>
+                    </View>
                 )
             })}
         </View>

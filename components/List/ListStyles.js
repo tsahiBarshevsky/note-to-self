@@ -12,5 +12,17 @@ export const styles = StyleSheet.create({
     },
     text: {
         color: 'white'
+    },
+    checkboxContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    labelUncompleted: {
+        marginLeft: 5,
+    },
+    labelCompleted: {
+        marginLeft: 5,
+        textDecorationLine: 'line-through',
+        textDecorationStyle: 'solid'
     }
 });

@@ -53,22 +53,27 @@ export default Insertion = ({ navigation }) => {
             items: items
         };
         getLists().then((storage) => {
+            var jsonMap = '';
             if (storage === null) // First insertion
             {
                 const map = new Map().set(uuid.v4(), list);
-                const jsonMap = JSON.stringify(map, replacer);
-                setLists(jsonMap);
+                jsonMap = JSON.stringify(map, replacer);
+                setLists(jsonMap); // update AsyncStorage
                 console.log("First list inserted");
             }
             else // Insert to existing map
             {
                 storage.set(uuid.v4(), list);
-                const jsonMap = JSON.stringify(storage, replacer);
-                setLists(jsonMap);
+                jsonMap = JSON.stringify(storage, replacer);
+                setLists(jsonMap); // update AsyncStorage
                 console.log("New list inserted to existing map");
             }
+            navigation.navigate({
+                name: 'Home',
+                params: { lists: jsonMap },
+                merge: true
+            });
         });
-        navigation.navigate('Home');
     }
 
     return (

@@ -55,7 +55,7 @@ const List = ({ id, list, lists, setLists }) => {
 
     const formatDate = () => {
         const date = new Date(list.lastUpdate);
-        return Moment(date).format('DD/MM/YYYY, hh:mm');
+        return Moment(date).format('DD/MM/YYYY, HH:mm');
     }
 
     return (

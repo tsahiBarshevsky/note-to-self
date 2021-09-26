@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { Button, Icon } from '@ui-kitten/components';
-import { getLists } from '../../AsyncStorageHandler';
+import { getLists, reviver } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
 import List from '../List/List';
 
@@ -13,13 +13,18 @@ const SearchIcon = (props) => (
     <Icon name='search' fill='#ffffff' {...props} />
 );
 
-export default HomeScreen = ({ navigation }) => {
+export default HomeScreen = ({ navigation, route }) => {
 
     const [lists, setLists] = useState('');
 
     useEffect(() => {
-        getLists().then((res) => setLists(res));
-    }, []);
+        if (route.params?.lists) {
+            console.log(`yes!`);
+            setLists(JSON.parse(route.params?.lists, reviver));
+        }
+        else
+            getLists().then((res) => { setLists(res); console.log('call'); });
+    }, [route.params?.lists]);
 
     return (
         <SafeAreaView style={styles.container}>

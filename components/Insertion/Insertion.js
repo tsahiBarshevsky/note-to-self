@@ -58,16 +58,17 @@ export default Insertion = ({ navigation }) => {
                 const map = new Map().set(uuid.v4(), list);
                 const jsonMap = JSON.stringify(map, replacer);
                 setLists(jsonMap);
-                alert("First list inserted");
+                console.log("First list inserted");
             }
             else // Insert to existing map
             {
                 storage.set(uuid.v4(), list);
                 const jsonMap = JSON.stringify(storage, replacer);
                 setLists(jsonMap);
-                alert("New list inserted to existing map");
+                console.log("New list inserted to existing map");
             }
         });
+        navigation.navigate('Home');
     }
 
     return (
@@ -78,7 +79,6 @@ export default Insertion = ({ navigation }) => {
                         appearance='ghost'
                         accessoryLeft={ArrowIcon}
                         style={styles.backButton}
-                        // onPress={() => navigation.navigate('Home')}
                         onPress={() => saveList()}
                     />
                     <Text style={styles.text}>Add new list</Text>

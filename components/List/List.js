@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Moment from 'moment';
 import { Button, Icon } from '@ui-kitten/components';
 import { View, Text, CheckBox } from 'react-native';
 import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
@@ -13,6 +14,10 @@ const ArrowDownIcon = (props) => (
     <Icon name='arrow-ios-downward' fill='#000' {...props} />
 );
 
+const DeleteIcon = (props) => (
+    <Icon name='trash-2' fill='#000' {...props} />
+);
+
 const List = ({ id, list, lists, setLists }) => {
 
     const [expanded, setExpanded] = useState(false);
@@ -21,6 +26,14 @@ const List = ({ id, list, lists, setLists }) => {
         array[item.items.completed ? 'completed' : 'uncompleted'].push(item);
         return array;
     }, { completed: [], uncompleted: [] });
+
+    const deleteList = () => {
+        const temp = new Map(lists);
+        temp.delete(id)
+        setLists(new Map(temp));
+        const jsonMap = JSON.stringify(temp, replacer);
+        updateStorage(jsonMap);
+    }
 
     const updateStatus = (itemID) => {
         const listObject = lists.get(id);
@@ -38,6 +51,11 @@ const List = ({ id, list, lists, setLists }) => {
         })));
         const jsonMap = JSON.stringify(lists, replacer);
         updateStorage(jsonMap);
+    }
+
+    const formatDate = () => {
+        const date = new Date(list.lastUpdate);
+        return Moment(date).format('DD/MM/YYYY, hh:mm');
     }
 
     return (
@@ -88,6 +106,12 @@ const List = ({ id, list, lists, setLists }) => {
                     </Collapse>
                 )
             })}
+            <Button
+                appearance='ghost'
+                accessoryLeft={DeleteIcon}
+                onPress={() => deleteList()}
+            />
+            <Text>{formatDate()}</Text>
         </View>
     )
 }

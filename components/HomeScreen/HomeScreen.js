@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { Button, Icon } from '@ui-kitten/components';
 import { getLists } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
@@ -17,9 +17,9 @@ export default HomeScreen = ({ navigation }) => {
 
     const [lists, setLists] = useState('');
 
-    const storeData = () => {
+    useEffect(() => {
         getLists().then((res) => setLists(res));
-    }
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -31,19 +31,21 @@ export default HomeScreen = ({ navigation }) => {
                     style={styles.addButton}
                     onPress={() => navigation.navigate('Insertion')} />
                 <Text style={{ color: 'white' }}>Note To Self</Text>
-                <Button onPress={() => storeData()} accessoryLeft={SearchIcon} size="tiny" appearance="ghost" style={styles.addButton} />
+                <Button accessoryLeft={SearchIcon} size="tiny" appearance="ghost" style={styles.addButton} />
             </View>
-            {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
-                return (
-                    <List
-                        key={list.key}
-                        id={list.key}
-                        list={list.properties}
-                        lists={lists}
-                        setLists={setLists}
-                    />
-                )
-            })}
+            <ScrollView>
+                {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
+                    return (
+                        <List
+                            key={list.key}
+                            id={list.key}
+                            list={list.properties}
+                            lists={lists}
+                            setLists={setLists}
+                        />
+                    )
+                })}
+            </ScrollView>
         </SafeAreaView>
     )
 }

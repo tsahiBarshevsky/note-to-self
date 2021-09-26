@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
+        marginBottom: 15
     },
     backButton: {
         borderRadius: 50,
@@ -25,17 +26,31 @@ export const styles = StyleSheet.create({
         color: 'white'
     },
     input: {
-        borderRadius: 10
+        color: 'white',
+        borderBottomColor: 'white',
+        borderBottomWidth: 1,
+        paddingBottom: 5,
+        paddingHorizontal: 5
+    },
+    itemInput: {
+        color: 'white',
+
+        padding: 5,
+        flex: 1
+    },
+    itemInsertionContainer:
+    {
+        flexDirection: 'row',
+        borderBottomColor: 'white',
+        borderBottomWidth: 1,
+        marginTop: 10
+    },
+    itemContainer: {
+        // backgroundColor: 'lightgray',
+        // height: 100,
+        marginTop: 30,
     },
     listItem: {
 
-    },
-    backdrop: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    },
-    card: {
-        backgroundColor: primary,
-        borderColor: primary,
-        borderRadius: 10
     }
 });

@@ -13,6 +13,17 @@ export const styles = StyleSheet.create({
     text: {
         color: 'white'
     },
+    collapseHeader: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+    expandButton: {
+        borderRadius: 50,
+        width: 30,
+        height: 30,
+        marginRight: 5
+    },
     checkboxContainer: {
         flexDirection: "row",
         alignItems: "center",

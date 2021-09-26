@@ -1,11 +1,21 @@
-import React from 'react';
-import { Button } from '@ui-kitten/components';
+import React, { useState } from 'react';
+import { Button, Icon } from '@ui-kitten/components';
 import { View, Text, CheckBox } from 'react-native';
-import { styles } from './ListStyles';
+import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
 import { replacer, setLists as updateStorage } from '../../AsyncStorageHandler';
+import { styles } from './ListStyles';
+
+const ArrowSideIcon = (props) => (
+    <Icon name='arrow-ios-forward' fill='#000' {...props} />
+);
+
+const ArrowDownIcon = (props) => (
+    <Icon name='arrow-ios-downward' fill='#000' {...props} />
+);
 
 const List = ({ id, list, lists, setLists }) => {
 
+    const [expanded, setExpanded] = useState(false);
     const items = Array.from(list.items, ([key, items]) => ({ key, items }));
     const divided = items.reduce((array, item) => {
         array[item.items.completed ? 'completed' : 'uncompleted'].push(item);
@@ -46,18 +56,36 @@ const List = ({ id, list, lists, setLists }) => {
                     </View>
                 )
             })}
-            <Text>Completed items</Text>
+            <View style={styles.collapseHeader}>
+                <Button
+                    size="tiny"
+                    appearance="ghost"
+                    accessoryLeft={expanded ? ArrowDownIcon : ArrowSideIcon}
+                    onPress={() => setExpanded(!expanded)}
+                    style={styles.expandButton}
+                />
+                <Text>Completed items</Text>
+            </View>
             {divided.completed.map((item) => {
                 return (
-                    <View key={item.key} style={styles.checkboxContainer}>
-                        <CheckBox
-                            value={item.items.completed}
-                            onValueChange={() => updateStatus(item.key)}
-                        />
-                        <Text style={styles.labelCompleted}>
-                            {item.items.value}
-                        </Text>
-                    </View>
+                    <Collapse
+                        key={item.key}
+                        isExpanded={expanded}
+                        onToggle={(isExpanded) => setExpanded(isExpanded)}
+                    >
+                        <CollapseHeader />
+                        <CollapseBody>
+                            <View style={styles.checkboxContainer}>
+                                <CheckBox
+                                    value={item.items.completed}
+                                    onValueChange={() => updateStatus(item.key)}
+                                />
+                                <Text style={styles.labelCompleted}>
+                                    {item.items.value}
+                                </Text>
+                            </View>
+                        </CollapseBody>
+                    </Collapse>
                 )
             })}
         </View>

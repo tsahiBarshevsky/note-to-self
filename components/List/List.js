@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Moment from 'moment';
-import { Button, Icon } from '@ui-kitten/components';
-import { View, Text, CheckBox } from 'react-native';
+import { Button, Text } from '@ui-kitten/components';
+import { View, CheckBox } from 'react-native';
 import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
 import { replacer, setLists as updateStorage } from '../../AsyncStorageHandler';
 import { styles } from './ListStyles';
+
+import { ArrowSideIcon, ArrowDownIcon, DeleteIcon, PinOffIcon, PinIcon } from './Icons';
 
 const List = ({ id, list, lists, setLists, navigation }) => {
 
@@ -41,6 +43,16 @@ const List = ({ id, list, lists, setLists, navigation }) => {
         updateStorage(jsonMap);
     }
 
+    const updatePin = () => {
+        const updatedList = list;
+        updatedList.pinned = !list.pinned;
+        const updatedMap = new Map(lists);
+        updatedMap.set(id, updatedList);
+        setLists(new Map(updatedMap));
+        const jsonMap = JSON.stringify(updatedMap, replacer);
+        updateStorage(jsonMap);
+    }
+
     const formatDate = () => {
         const date = new Date(list.lastUpdate);
         return Moment(date).format('DD/MM/YYYY, HH:mm');
@@ -48,20 +60,28 @@ const List = ({ id, list, lists, setLists, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>{list.name}</Text>
-            {divided.uncompleted.map((item) => {
-                return (
-                    <View key={item.key} style={styles.checkboxContainer}>
-                        <CheckBox
-                            value={item.items.completed}
-                            onValueChange={() => updateStatus(item.key)}
-                        />
-                        <Text style={styles.labelUncompleted}>
-                            {item.items.value}
-                        </Text>
-                    </View>
-                )
-            })}
+            <Text category='h6' style={styles.text}>{list.name}</Text>
+            <Button
+                accessoryLeft={list.pinned ? PinOffIcon : PinIcon}
+                onPress={() => updatePin()}
+            />
+            <View style={styles.checkboxes}>
+                {divided.uncompleted.map((item) => {
+                    return (
+                        <View key={item.key} style={styles.checkboxContainer}>
+                            <CheckBox
+                                tintColor={{ true: 'white' }}
+                                tintColors={{ true: 'white' }}
+                                value={item.items.completed}
+                                onValueChange={() => updateStatus(item.key)}
+                            />
+                            <Text style={styles.labelUncompleted}>
+                                {item.items.value}
+                            </Text>
+                        </View>
+                    )
+                })}
+            </View>
             <View style={styles.collapseHeader}>
                 <Button
                     size="tiny"
@@ -70,59 +90,54 @@ const List = ({ id, list, lists, setLists, navigation }) => {
                     onPress={() => setExpanded(!expanded)}
                     style={styles.expandButton}
                 />
-                <Text>Completed items</Text>
+                <Text style={styles.text}>Completed items</Text>
             </View>
-            {divided.completed.map((item) => {
-                return (
-                    <Collapse
-                        key={item.key}
-                        isExpanded={expanded}
-                        onToggle={(isExpanded) => setExpanded(isExpanded)}
-                    >
-                        <CollapseHeader />
-                        <CollapseBody>
-                            <View style={styles.checkboxContainer}>
-                                <CheckBox
-                                    value={item.items.completed}
-                                    onValueChange={() => updateStatus(item.key)}
-                                />
-                                <Text style={styles.labelCompleted}>
-                                    {item.items.value}
-                                </Text>
-                            </View>
-                        </CollapseBody>
-                    </Collapse>
-                )
-            })}
-            <Button
-                appearance='ghost'
-                accessoryLeft={DeleteIcon}
-                onPress={() => deleteList()}
-            />
-            <Button
-                appearance='ghost'
-                accessoryLeft={EditIcon}
-                onPress={() => navigation.navigate('Editing', { id: id, title: list.name })}
-            />
-            <Text>{formatDate()}</Text>
+            <View style={styles.checkboxes}>
+                {divided.completed.map((item) => {
+                    return (
+                        <Collapse
+                            key={item.key}
+                            isExpanded={expanded}
+                            onToggle={(isExpanded) => setExpanded(isExpanded)}
+                        >
+                            <CollapseHeader />
+                            <CollapseBody>
+                                <View style={styles.checkboxContainer}>
+                                    <CheckBox
+                                        tintColor={{ true: 'white' }}
+                                        tintColors={{ true: 'white' }}
+                                        value={item.items.completed}
+                                        onValueChange={() => updateStatus(item.key)}
+                                    />
+                                    <Text style={styles.labelCompleted}>
+                                        {item.items.value}
+                                    </Text>
+                                </View>
+                            </CollapseBody>
+                        </Collapse>
+                    )
+                })}
+            </View>
+            <View style={styles.footer}>
+                <Button
+                    appearance='ghost'
+                    accessoryLeft={DeleteIcon}
+                    style={styles.button}
+                    onPress={() => deleteList()}
+                />
+                {/* <Button
+                    appearance='ghost'
+                    accessoryLeft={EditIcon}
+                    style={styles.button}
+                    onPress={() => navigation.navigate('Editing', { id: id, title: list.name })}
+                /> */}
+                <View style={styles.lastUpdate}>
+                    <Text category='label' style={styles.label}>Last update:</Text>
+                    <Text category='c1' style={styles.text}>{formatDate()}</Text>
+                </View>
+            </View>
         </View>
     )
 }
 
 export default List;
-
-const ArrowSideIcon = (props) => (
-    <Icon name='arrow-ios-forward' fill='#000' {...props} />
-);
-
-const ArrowDownIcon = (props) => (
-    <Icon name='arrow-ios-downward' fill='#000' {...props} />
-);
-
-const DeleteIcon = (props) => (
-    <Icon name='trash-2' fill='#000' {...props} />
-);
-
-const EditIcon = (props) => (
-    <Icon name='edit-2' fill='#000' {...props} />
-);

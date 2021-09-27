@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, Text, View, TextInput } from 'react-native';
+import { SafeAreaView, ScrollView, View, TextInput } from 'react-native';
 import { Button, Icon } from '@ui-kitten/components';
 import { getLists, reviver } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
 import List from '../List/List';
 
-const PlusIcon = (props) => (
-    <Icon name='plus' fill='#ffffff' {...props} />
-);
-
-const SearchIcon = (props) => (
-    <Icon name='search' fill='#ffffff' {...props} />
-);
 
 export default HomeScreen = ({ navigation, route }) => {
 
@@ -73,3 +66,11 @@ export default HomeScreen = ({ navigation, route }) => {
         </SafeAreaView>
     )
 }
+
+const PlusIcon = (props) => (
+    <Icon name='plus' fill='#ffffff' {...props} />
+);
+
+const SearchIcon = (props) => (
+    <Icon name='search' fill='#ffffff' {...props} />
+);

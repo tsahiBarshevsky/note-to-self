@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: primary,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
     header: {
         display: 'flex',
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 25,
         marginHorizontal: 20,
-        marginBottom: 10,
+        marginBottom: 20,
         padding: 5,
         borderRadius: 10,
         backgroundColor: secondary,

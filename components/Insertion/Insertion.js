@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
-import { Button, Icon, Divider } from '@ui-kitten/components';
+import { Button, Icon } from '@ui-kitten/components';
 import uuid from 'react-native-uuid';
 import { styles } from './InsertionStyles';
 import { getLists, replacer, setLists } from '../../AsyncStorageHandler';
+import ListItem from './ListItem/ListItem';
 
 const ArrowIcon = (props) => (
     <Icon name='chevron-left' fill='#fff' {...props} />
@@ -11,10 +12,6 @@ const ArrowIcon = (props) => (
 
 const PlusIcon = (props) => (
     <Icon name='plus' fill='#fff' {...props} />
-);
-
-const MenuIcon = (props) => (
-    <Icon name='more-vertical' fill='#fff' {...props} />
 );
 
 export default Insertion = ({ navigation }) => {
@@ -108,16 +105,14 @@ export default Insertion = ({ navigation }) => {
                 {items.size > 0 ?
                     Array.from(items, ([key, properties]) => ({ key, properties })).map((item) => {
                         return (
-                            // <Text key={item.key} style={{ color: 'white', marginVertical: 20 }}>
-                            //     {item.properties.value}
-                            // </Text>
-                            <View key={item.key}>
-                                <Text style={styles.text}>
-                                    {item.properties.value}
-                                </Text>
-                                <Divider style={{ marginVertical: 15 }} />
-                                {/* <Button onPress={() => deleteItem(item.key)}>delete</Button> */}
-                            </View>
+                            <ListItem
+                                key={item.key}
+                                id={item.key}
+                                value={item.properties.value}
+                                deleteItem={deleteItem}
+                                items={items}
+                                setItems={setItems}
+                            />
                         )
                     })
                     :

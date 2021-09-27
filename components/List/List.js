@@ -6,19 +6,7 @@ import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react
 import { replacer, setLists as updateStorage } from '../../AsyncStorageHandler';
 import { styles } from './ListStyles';
 
-const ArrowSideIcon = (props) => (
-    <Icon name='arrow-ios-forward' fill='#000' {...props} />
-);
-
-const ArrowDownIcon = (props) => (
-    <Icon name='arrow-ios-downward' fill='#000' {...props} />
-);
-
-const DeleteIcon = (props) => (
-    <Icon name='trash-2' fill='#000' {...props} />
-);
-
-const List = ({ id, list, lists, setLists }) => {
+const List = ({ id, list, lists, setLists, navigation }) => {
 
     const [expanded, setExpanded] = useState(false);
     const items = Array.from(list.items, ([key, items]) => ({ key, items }));
@@ -111,9 +99,30 @@ const List = ({ id, list, lists, setLists }) => {
                 accessoryLeft={DeleteIcon}
                 onPress={() => deleteList()}
             />
+            <Button
+                appearance='ghost'
+                accessoryLeft={EditIcon}
+                onPress={() => navigation.navigate('Editing', { id: id, title: list.name })}
+            />
             <Text>{formatDate()}</Text>
         </View>
     )
 }
 
 export default List;
+
+const ArrowSideIcon = (props) => (
+    <Icon name='arrow-ios-forward' fill='#000' {...props} />
+);
+
+const ArrowDownIcon = (props) => (
+    <Icon name='arrow-ios-downward' fill='#000' {...props} />
+);
+
+const DeleteIcon = (props) => (
+    <Icon name='trash-2' fill='#000' {...props} />
+);
+
+const EditIcon = (props) => (
+    <Icon name='edit-2' fill='#000' {...props} />
+);

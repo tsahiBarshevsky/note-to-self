@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, Text, View, TextInput } from 'react-native';
 import { Button, Icon } from '@ui-kitten/components';
 import { getLists, reviver } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
@@ -15,7 +15,8 @@ const SearchIcon = (props) => (
 
 export default HomeScreen = ({ navigation, route }) => {
 
-    const [lists, setLists] = useState('');
+    const [lists, setLists] = useState(new Map());
+    const [searchKey, setSearchKey] = useState('');
 
     useEffect(() => {
         if (route.params?.lists) {
@@ -34,11 +35,28 @@ export default HomeScreen = ({ navigation, route }) => {
                     appearance="ghost"
                     accessoryLeft={PlusIcon}
                     style={styles.addButton}
-                    onPress={() => navigation.navigate('Insertion')} />
-                <Text style={{ color: 'white' }}>Note To Self</Text>
-                <Button accessoryLeft={SearchIcon} size="tiny" appearance="ghost" style={styles.addButton} />
+                    onPress={() => navigation.navigate('Insertion')}
+                />
+                {/* <Text style={{ color: 'white' }}>Note To Self</Text> */}
+                <TextInput
+                    value={searchKey}
+                    onChangeText={setSearchKey}
+                    placeholder="Search list..."
+                    placeholderTextColor="white"
+                    style={{ color: 'white' }}
+                />
+                <Button
+                    size="tiny"
+                    appearance="ghost"
+                    accessoryLeft={SearchIcon}
+                    style={styles.addButton}
+                    onPress={() => {
+                        navigation.navigate('Search', { key: searchKey.trim() });
+                        setSearchKey('');
+                    }}
+                />
             </View>
-            <ScrollView>
+            {lists && <ScrollView>
                 {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
                     return (
                         <List
@@ -47,10 +65,11 @@ export default HomeScreen = ({ navigation, route }) => {
                             list={list.properties}
                             lists={lists}
                             setLists={setLists}
+                            navigation={navigation}
                         />
                     )
                 })}
-            </ScrollView>
+            </ScrollView>}
         </SafeAreaView>
     )
 }

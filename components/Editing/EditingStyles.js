@@ -22,27 +22,4 @@ export const styles = StyleSheet.create({
     text: {
         color: 'white'
     },
-    input: {
-        color: 'white',
-        borderBottomColor: 'white',
-        borderBottomWidth: 1,
-        paddingBottom: 5,
-        paddingHorizontal: 5
-    },
-    itemInput: {
-        color: 'white',
-
-        padding: 5,
-        flex: 1
-    },
-    itemInsertionContainer:
-    {
-        flexDirection: 'row',
-        borderBottomColor: 'white',
-        borderBottomWidth: 1,
-        marginTop: 10
-    },
-    itemContainer: {
-        marginTop: 30,
-    }
 });

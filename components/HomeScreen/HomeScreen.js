@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, View, TextInput } from 'react-native';
-import { Button, Icon } from '@ui-kitten/components';
+import { Button, Icon, Text } from '@ui-kitten/components';
 import { getLists, reviver } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
 import List from '../List/List';
-
 
 export default HomeScreen = ({ navigation, route }) => {
 
     const [lists, setLists] = useState(new Map());
     const [searchKey, setSearchKey] = useState('');
+    const arrayLists = Array.from(lists, ([key, items]) => ({ key, items }));
+    const divided = arrayLists.reduce((array, item) => {
+        array[item.items.pinned ? 'pinned' : 'unpinned'].push(item);
+        return array;
+    }, { pinned: [], unpinned: [] });
 
     useEffect(() => {
         if (route.params?.lists) {
@@ -50,7 +54,37 @@ export default HomeScreen = ({ navigation, route }) => {
                 />
             </View>
             {lists && <ScrollView>
-                {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label} category='p2'>Pinned</Text>
+                </View>
+                {divided.pinned.map((item) => {
+                    return (
+                        <List
+                            key={item.key}
+                            id={item.key}
+                            list={item.items}
+                            lists={lists}
+                            setLists={setLists}
+                            navigation={navigation}
+                        />
+                    )
+                })}
+                <View style={styles.labelBottomContainer}>
+                    <Text style={styles.label} category='p2'>Other lists</Text>
+                </View>
+                {divided.unpinned.map((item) => {
+                    return (
+                        <List
+                            key={item.key}
+                            id={item.key}
+                            list={item.items}
+                            lists={lists}
+                            setLists={setLists}
+                            navigation={navigation}
+                        />
+                    )
+                })}
+                {/* {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
                     return (
                         <List
                             key={list.key}
@@ -61,7 +95,7 @@ export default HomeScreen = ({ navigation, route }) => {
                             navigation={navigation}
                         />
                     )
-                })}
+                })} */}
             </ScrollView>}
         </SafeAreaView>
     )

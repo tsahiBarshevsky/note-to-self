@@ -18,9 +18,9 @@ export const EditIcon = (props) => (
 );
 
 export const PinOffIcon = (props) => (
-    <Icon name='pin-off-outline' pack='materialCommunity' {...props} />
+    <Icon name='pin-off' fill='#fff' pack='materialCommunity' {...props} />
 );
 
 export const PinIcon = (props) => (
-    <Icon name='pin-outline' pack='materialCommunity' {...props} />
+    <Icon name='pin' fill='#fff' pack='materialCommunity' {...props} />
 );

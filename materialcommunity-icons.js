@@ -22,6 +22,6 @@ const IconProvider = (name) => ({
 function MaterialCommunityIcon({ name, style }) {
     const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
     return (
-        <Icon name={name} size={height} color={tintColor} style={iconStyle} />
+        <Icon name={name} size={height} color='white' style={iconStyle} />
     );
 }

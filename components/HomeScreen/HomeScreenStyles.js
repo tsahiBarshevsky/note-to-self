@@ -28,5 +28,17 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         width: 30,
         height: 30
+    },
+    labelContainer: {
+        marginHorizontal: 20,
+        marginBottom: 15
+    },
+    labelBottomContainer: {
+        marginHorizontal: 20,
+        marginBottom: 15,
+        marginTop: 10
+    },
+    label: {
+        color: 'white'
     }
 });

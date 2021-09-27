@@ -60,11 +60,16 @@ const List = ({ id, list, lists, setLists, navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text category='h6' style={styles.text}>{list.name}</Text>
-            <Button
-                accessoryLeft={list.pinned ? PinOffIcon : PinIcon}
-                onPress={() => updatePin()}
-            />
+            <View style={styles.header}>
+                <Text category='h6' style={styles.text}>{list.name}</Text>
+                <Button
+                    size="small"
+                    appearance='ghost'
+                    style={styles.pinButton}
+                    accessoryLeft={list.pinned ? PinOffIcon : PinIcon}
+                    onPress={() => updatePin()}
+                />
+            </View>
             <View style={styles.checkboxes}>
                 {divided.uncompleted.map((item) => {
                     return (

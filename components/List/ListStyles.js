@@ -13,6 +13,17 @@ export const styles = StyleSheet.create({
     text: {
         color: 'white'
     },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+    pinButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 50
+    },
     collapseHeader: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -54,7 +65,7 @@ export const styles = StyleSheet.create({
     footer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     lastUpdate: {
         flexDirection: 'column'

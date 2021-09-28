@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SafeAreaView, ScrollView, View, TextInput } from 'react-native';
 import { Button, Icon, Text } from '@ui-kitten/components';
+import Toast from 'react-native-toast-message';
 import { getLists, reviver } from '../../AsyncStorageHandler';
 import { styles } from './HomeScreenStyles';
 import List from '../List/List';
@@ -24,6 +25,19 @@ export default HomeScreen = ({ navigation, route }) => {
         else
             getLists().then((res) => { setLists(res); console.log('call'); });
     }, [route.params?.lists]);
+
+    const onSearch = () => {
+        if (searchKey !== '') {
+            navigation.navigate('Search', { key: searchKey.trim() });
+            setSearchKey('');
+        }
+        else
+            Toast.show({
+                type: 'info',
+                position: 'bottom',
+                text1: 'Please enter a serach query'
+            });
+    }
 
     const backToTop = () => {
         scrollRef.current.scrollTo({ y: 0, animated: true });
@@ -51,10 +65,7 @@ export default HomeScreen = ({ navigation, route }) => {
                     appearance="ghost"
                     accessoryLeft={SearchIcon}
                     style={styles.addButton}
-                    onPress={() => {
-                        navigation.navigate('Search', { key: searchKey.trim() });
-                        setSearchKey('');
-                    }}
+                    onPress={() => onSearch()}
                 />
             </View>
             {lists && <ScrollView ref={scrollRef}>

@@ -23,5 +23,11 @@ export const styles = StyleSheet.create({
     },
     text: {
         color: 'white',
+    },
+    messageContainer: {
+        marginHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
     }
 });

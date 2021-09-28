@@ -39,28 +39,31 @@ const Search = ({ navigation, route }) => {
     const renderResults = () => {
         const listsArray = Array.from(lists, ([key, properties]) => ({ key, properties }));
         if (listsArray.filter(filterByName).length > 0) {
-            return listsArray.filter(filterByName).map((list) => {
-                return (
-                    <List
-                        key={list.key}
-                        id={list.key}
-                        list={list.properties}
-                        lists={lists}
-                        setLists={setLists}
-                        navigation={navigation}
-                    />
-                )
-            })
+            return <ScrollView>
+                {listsArray.filter(filterByName).map((list) => {
+                    return (
+                        <List
+                            key={list.key}
+                            id={list.key}
+                            list={list.properties}
+                            lists={lists}
+                            setLists={setLists}
+                            navigation={navigation}
+                        />
+                    )
+                })}
+            </ScrollView>
         }
         else {
             return (
-                <View>
-                    <Button
-                        accessoryLeft={HomeIcon}
-                        onPress={() => navigation.navigate('Home')}
-                    >
-                        Back home
-                    </Button>
+                <View style={styles.messageContainer}>
+                    <Icon
+                        style={{ width: 30, height: 30 }}
+                        fill='#fff'
+                        name='text-search'
+                        pack='materialCommunity'
+                    />
+                    <Text style={styles.text}>No lists found</Text>
                 </View>
             )
         }
@@ -77,9 +80,9 @@ const Search = ({ navigation, route }) => {
                 />
                 <Text category='h6' style={styles.text}>Search results for {key}</Text>
             </View>
-            <ScrollView>
-                {renderResults()}
-            </ScrollView>
+            {/* <ScrollView> */}
+            {renderResults()}
+            {/* </ScrollView> */}
         </SafeAreaView>
     )
 }

@@ -8,7 +8,6 @@ import { getLists, replacer, setLists } from '../../AsyncStorageHandler';
 import { styles } from './InsertionStyles';
 import ListItem from './ListItem/ListItem';
 
-
 export default Insertion = ({ navigation }) => {
 
     const [name, setName] = useState('');
@@ -27,7 +26,7 @@ export default Insertion = ({ navigation }) => {
                 type: 'error',
                 position: 'bottom',
                 text1: 'Oops!',
-                text2: "you can't add an empty item"
+                text2: "You can't add an empty item"
             });
     }
 

@@ -6,19 +6,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { MaterialCommunityPack } from './materialcommunity-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Toast from 'react-native-toast-message';
+import { I18nManager } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import HomeScreen from './components/HomeScreen/HomeScreen';
 import Insertion from './components/Insertion/Insertion';
 import Editing from './components/Editing/Editing';
 import Search from './components/Search/Search';
 
-import { I18nManager } from 'react-native';
-I18nManager.allowRTL(false);
-
 const Stack = createNativeStackNavigator();
+I18nManager.allowRTL(false);
 
 export default function App() {
     return (
         <>
+            <StatusBar style='light' />
             <IconRegistry icons={[EvaIconsPack, MaterialCommunityPack]} />
             <ApplicationProvider {...eva} theme={eva.dark}>
                 <NavigationContainer>

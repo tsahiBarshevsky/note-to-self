@@ -10,6 +10,7 @@ export default HomeScreen = ({ navigation, route }) => {
 
     const [lists, setLists] = useState(new Map());
     const [searchKey, setSearchKey] = useState('');
+    const [showButton, setShowButton] = useState(false);
     const arrayLists = Array.from(lists, ([key, items]) => ({ key, items }));
     const divided = arrayLists.reduce((array, item) => {
         array[item.items.pinned ? 'pinned' : 'unpinned'].push(item);
@@ -25,6 +26,10 @@ export default HomeScreen = ({ navigation, route }) => {
         else
             getLists().then((res) => { setLists(res); console.log('call'); });
     }, [route.params?.lists]);
+
+    const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+        return layoutMeasurement.height + contentOffset.y >= contentSize.height - 20;
+    };
 
     const onSearch = () => {
         if (searchKey !== '') {
@@ -68,61 +73,83 @@ export default HomeScreen = ({ navigation, route }) => {
                     onPress={() => onSearch()}
                 />
             </View>
-            {lists && <ScrollView ref={scrollRef}>
-                {divided.unpinned.length === lists.size ?
-                    Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
-                        return (
-                            <List
-                                key={list.key}
-                                id={list.key}
-                                list={list.properties}
-                                lists={lists}
-                                setLists={setLists}
-                                navigation={navigation}
-                            />
-                        )
-                    })
+            {lists &&
+                (lists.size > 0 ?
+                    <ScrollView
+                        ref={scrollRef}
+                        onScroll={({ nativeEvent }) => {
+                            if (isCloseToBottom(nativeEvent))
+                                setShowButton(true);
+                        }}
+                        scrollEventThrottle={400}
+                    >
+                        {divided.unpinned.length === lists.size ?
+                            Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
+                                return (
+                                    <List
+                                        key={list.key}
+                                        id={list.key}
+                                        list={list.properties}
+                                        lists={lists}
+                                        setLists={setLists}
+                                        navigation={navigation}
+                                    />
+                                )
+                            })
+                            :
+                            <>
+                                <View style={styles.labelContainer}>
+                                    <Text style={styles.label} category='p2'>Pinned</Text>
+                                </View>
+                                {divided.pinned.map((item) => {
+                                    return (
+                                        <List
+                                            key={item.key}
+                                            id={item.key}
+                                            list={item.items}
+                                            lists={lists}
+                                            setLists={setLists}
+                                            navigation={navigation}
+                                        />
+                                    )
+                                })}
+                                <View style={styles.labelBottomContainer}>
+                                    <Text style={styles.label} category='p2'>Other lists</Text>
+                                </View>
+                                {divided.unpinned.map((item) => {
+                                    return (
+                                        <List
+                                            key={item.key}
+                                            id={item.key}
+                                            list={item.items}
+                                            lists={lists}
+                                            setLists={setLists}
+                                            navigation={navigation}
+                                        />
+                                    )
+                                })}
+                            </>}
+                        {showButton && <Button
+                            onPress={() => backToTop()}
+                            style={styles.backToTop}
+                            accessoryLeft={ArrowUpIcon}
+                        >
+                            Back to top
+                        </Button>}
+                    </ScrollView>
                     :
-                    <>
-                        <View style={styles.labelContainer}>
-                            <Text style={styles.label} category='p2'>Pinned</Text>
-                        </View>
-                        {divided.pinned.map((item) => {
-                            return (
-                                <List
-                                    key={item.key}
-                                    id={item.key}
-                                    list={item.items}
-                                    lists={lists}
-                                    setLists={setLists}
-                                    navigation={navigation}
-                                />
-                            )
-                        })}
-                        <View style={styles.labelBottomContainer}>
-                            <Text style={styles.label} category='p2'>Other lists</Text>
-                        </View>
-                        {divided.unpinned.map((item) => {
-                            return (
-                                <List
-                                    key={item.key}
-                                    id={item.key}
-                                    list={item.items}
-                                    lists={lists}
-                                    setLists={setLists}
-                                    navigation={navigation}
-                                />
-                            )
-                        })}
-                    </>}
-                {lists.size > 1 && <Button
-                    onPress={() => backToTop()}
-                    style={styles.backToTop}
-                    accessoryLeft={ArrowUpIcon}
-                >
-                    Back to top
-                </Button>}
-            </ScrollView>}
+                    <View style={styles.messageContainer}>
+                        <Icon
+                            style={{ width: 30, height: 30 }}
+                            fill='#fff'
+                            name='playlist-plus'
+                            pack='materialCommunity'
+                        />
+                        <Text style={{ textAlign: 'center' }}>
+                            Lists you'll add {"\n"} will be shown here
+                        </Text>
+                    </View>)
+            }
         </SafeAreaView>
     )
 }

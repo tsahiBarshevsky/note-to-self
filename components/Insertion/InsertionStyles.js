@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginBottom: 15,
-        marginHorizontal: 20
+        marginHorizontal: 20,
+        marginTop: 25
     },
     backButton: {
         borderRadius: 50,
@@ -55,5 +56,5 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1
-    },
+    }
 });

@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 15,
         paddingHorizontal: 20,
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        marginTop: 25
     },
     backButton: {
         borderRadius: 50,

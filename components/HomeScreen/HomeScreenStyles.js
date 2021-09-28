@@ -54,5 +54,11 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: secondary,
         borderWidth: 0
+    },
+    messageContainer: {
+        marginHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
     }
 });

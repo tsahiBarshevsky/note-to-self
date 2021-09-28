@@ -5,11 +5,11 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { MaterialCommunityPack } from './materialcommunity-icons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Toast from 'react-native-toast-message';
 import HomeScreen from './components/HomeScreen/HomeScreen';
 import Insertion from './components/Insertion/Insertion';
 import Editing from './components/Editing/Editing';
 import Search from './components/Search/Search';
-
 
 import { I18nManager } from 'react-native';
 I18nManager.allowRTL(false);
@@ -20,7 +20,7 @@ export default function App() {
     return (
         <>
             <IconRegistry icons={[EvaIconsPack, MaterialCommunityPack]} />
-            <ApplicationProvider {...eva} theme={eva.light}>
+            <ApplicationProvider {...eva} theme={eva.dark}>
                 <NavigationContainer>
                     <Stack.Navigator screenOptions={{ headerShown: false }}>
                         <Stack.Screen name="Home" component={HomeScreen} />
@@ -28,6 +28,7 @@ export default function App() {
                         <Stack.Screen name="Editing" component={Editing} />
                         <Stack.Screen name="Search" component={Search} />
                     </Stack.Navigator>
+                    <Toast ref={(ref) => Toast.setRef(ref)} />
                 </NavigationContainer>
             </ApplicationProvider>
         </>

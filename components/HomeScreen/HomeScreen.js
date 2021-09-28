@@ -104,13 +104,13 @@ export default HomeScreen = ({ navigation, route }) => {
                             )
                         })}
                     </>}
-                <Button
+                {lists.size > 1 && <Button
                     onPress={() => backToTop()}
                     style={styles.backToTop}
                     accessoryLeft={ArrowUpIcon}
                 >
                     Back to top
-                </Button>
+                </Button>}
             </ScrollView>}
         </SafeAreaView>
     )

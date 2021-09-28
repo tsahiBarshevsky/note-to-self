@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginBottom: 15
+        marginBottom: 15,
+        marginHorizontal: 20
     },
     backButton: {
         borderRadius: 50,
@@ -27,7 +28,8 @@ export const styles = StyleSheet.create({
         borderBottomColor: 'white',
         borderBottomWidth: 1,
         paddingBottom: 5,
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        marginHorizontal: 20
     },
     itemInput: {
         color: 'white',
@@ -40,9 +42,18 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         borderBottomColor: 'white',
         borderBottomWidth: 1,
-        marginTop: 10
+        marginTop: 10,
+        marginHorizontal: 20
     },
     itemContainer: {
         marginTop: 30,
-    }
+        marginHorizontal: 20,
+    },
+    messageContainer: {
+        marginTop: 30,
+        marginHorizontal: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    },
 });

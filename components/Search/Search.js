@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, View, Text } from 'react-native';
-import { Button, Icon } from '@ui-kitten/components';
+import { SafeAreaView, ScrollView, View } from 'react-native';
+import { Button, Icon, Text } from '@ui-kitten/components';
 import { getLists, replacer } from '../../AsyncStorageHandler';
 import List from '../List/List';
 import { styles } from './SearchStyles';
@@ -75,7 +75,7 @@ const Search = ({ navigation, route }) => {
                     style={styles.backButton}
                     onPress={() => backHome()}
                 />
-                <Text style={styles.text}>Search results for {key}</Text>
+                <Text category='h6' style={styles.text}>Search results for {key}</Text>
             </View>
             <ScrollView>
                 {renderResults()}

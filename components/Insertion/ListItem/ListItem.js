@@ -3,26 +3,6 @@ import { View, Text, TextInput } from 'react-native';
 import { Button, Divider, MenuItem, OverflowMenu, Icon } from '@ui-kitten/components';
 import { styles } from './ListItemStyles';
 
-const MenuIcon = (props) => (
-    <Icon name='more-vertical' fill='#fff' {...props} />
-);
-
-const DeleteIcon = (props) => (
-    <Icon name='trash-2' fill='#000' {...props} />
-);
-
-const EditIcon = (props) => (
-    <Icon name='edit-2' fill='#000' {...props} />
-);
-
-const SaveIcon = (props) => (
-    <Icon name='save' fill='#000' {...props} />
-);
-
-const CancelIcon = (props) => (
-    <Icon name='arrow-back' fill='#000' {...props} />
-);
-
 const ListItem = ({ id, value, deleteItem, items, setItems }) => {
 
     const [visible, setVisible] = useState(false);
@@ -71,6 +51,7 @@ const ListItem = ({ id, value, deleteItem, items, setItems }) => {
             size="small"
             appearance='ghost'
             accessoryLeft={MenuIcon}
+            style={styles.menuButton}
         />
     );
 
@@ -104,15 +85,36 @@ const ListItem = ({ id, value, deleteItem, items, setItems }) => {
                         visible={visible}
                         onSelect={onItemSelectEditMenu}
                         placement="bottom"
+                        style={{ backgroundColor: 'red' }}
                         onBackdropPress={() => setVisible(false)}
                     >
                         <MenuItem title='Save' accessoryLeft={SaveIcon} />
                         <MenuItem title='Cancel' accessoryLeft={CancelIcon} />
                     </OverflowMenu>
                 </View>}
-            <Divider style={{ marginVertical: 15 }} />
+            <Divider style={styles.divider} />
         </View>
     )
 }
 
 export default ListItem;
+
+const MenuIcon = (props) => (
+    <Icon name='more-vertical' fill='#fff' {...props} />
+);
+
+const DeleteIcon = (props) => (
+    <Icon name='trash-2' fill='#fff' {...props} />
+);
+
+const EditIcon = (props) => (
+    <Icon name='edit-2' fill='#fff' {...props} />
+);
+
+const SaveIcon = (props) => (
+    <Icon name='save' fill='#fff' {...props} />
+);
+
+const CancelIcon = (props) => (
+    <Icon name='arrow-back' fill='#fff' {...props} />
+);

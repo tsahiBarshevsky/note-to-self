@@ -12,4 +12,11 @@ export const styles = StyleSheet.create({
     text: {
         color: 'white'
     },
+    menuButton: {
+        width: 20
+    },
+    divider: {
+        backgroundColor: '#ffffff33',
+        marginBottom: 15
+    }
 });

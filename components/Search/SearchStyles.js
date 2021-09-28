@@ -12,7 +12,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         marginBottom: 15,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        flexWrap: 'wrap'
     },
     backButton: {
         borderRadius: 50,
@@ -21,6 +22,6 @@ export const styles = StyleSheet.create({
         marginRight: 15
     },
     text: {
-        color: 'white'
+        color: 'white',
     }
 });

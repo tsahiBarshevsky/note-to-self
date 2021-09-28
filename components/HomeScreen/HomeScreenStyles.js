@@ -24,6 +24,13 @@ export const styles = StyleSheet.create({
         // shadowOpacity: 0.8,
         // shadowRadius: 2,
     },
+    input: {
+        color: 'white',
+        borderRadius: 10,
+        paddingHorizontal: 5,
+        width: 200,
+        textAlign: 'center'
+    },
     addButton: {
         borderRadius: 50,
         width: 30,
@@ -40,5 +47,12 @@ export const styles = StyleSheet.create({
     },
     label: {
         color: 'white'
+    },
+    backToTop: {
+        marginHorizontal: 20,
+        marginBottom: 20,
+        borderRadius: 10,
+        backgroundColor: secondary,
+        borderWidth: 0
     }
 });

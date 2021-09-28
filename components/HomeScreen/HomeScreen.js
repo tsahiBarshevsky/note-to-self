@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SafeAreaView, ScrollView, View, TextInput } from 'react-native';
 import { Button, Icon, Text } from '@ui-kitten/components';
 import { getLists, reviver } from '../../AsyncStorageHandler';
@@ -14,6 +14,7 @@ export default HomeScreen = ({ navigation, route }) => {
         array[item.items.pinned ? 'pinned' : 'unpinned'].push(item);
         return array;
     }, { pinned: [], unpinned: [] });
+    const scrollRef = useRef();
 
     useEffect(() => {
         if (route.params?.lists) {
@@ -23,6 +24,10 @@ export default HomeScreen = ({ navigation, route }) => {
         else
             getLists().then((res) => { setLists(res); console.log('call'); });
     }, [route.params?.lists]);
+
+    const backToTop = () => {
+        scrollRef.current.scrollTo({ y: 0, animated: true });
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -34,13 +39,12 @@ export default HomeScreen = ({ navigation, route }) => {
                     style={styles.addButton}
                     onPress={() => navigation.navigate('Insertion')}
                 />
-                {/* <Text style={{ color: 'white' }}>Note To Self</Text> */}
                 <TextInput
                     value={searchKey}
                     onChangeText={setSearchKey}
                     placeholder="Search list..."
-                    placeholderTextColor="white"
-                    style={{ color: 'white' }}
+                    placeholderTextColor="#ffffff99"
+                    style={styles.input}
                 />
                 <Button
                     size="tiny"
@@ -53,49 +57,60 @@ export default HomeScreen = ({ navigation, route }) => {
                     }}
                 />
             </View>
-            {lists && <ScrollView>
-                <View style={styles.labelContainer}>
-                    <Text style={styles.label} category='p2'>Pinned</Text>
-                </View>
-                {divided.pinned.map((item) => {
-                    return (
-                        <List
-                            key={item.key}
-                            id={item.key}
-                            list={item.items}
-                            lists={lists}
-                            setLists={setLists}
-                            navigation={navigation}
-                        />
-                    )
-                })}
-                <View style={styles.labelBottomContainer}>
-                    <Text style={styles.label} category='p2'>Other lists</Text>
-                </View>
-                {divided.unpinned.map((item) => {
-                    return (
-                        <List
-                            key={item.key}
-                            id={item.key}
-                            list={item.items}
-                            lists={lists}
-                            setLists={setLists}
-                            navigation={navigation}
-                        />
-                    )
-                })}
-                {/* {Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
-                    return (
-                        <List
-                            key={list.key}
-                            id={list.key}
-                            list={list.properties}
-                            lists={lists}
-                            setLists={setLists}
-                            navigation={navigation}
-                        />
-                    )
-                })} */}
+            {lists && <ScrollView ref={scrollRef}>
+                {divided.unpinned.length === lists.size ?
+                    Array.from(lists, ([key, properties]) => ({ key, properties })).map((list) => {
+                        return (
+                            <List
+                                key={list.key}
+                                id={list.key}
+                                list={list.properties}
+                                lists={lists}
+                                setLists={setLists}
+                                navigation={navigation}
+                            />
+                        )
+                    })
+                    :
+                    <>
+                        <View style={styles.labelContainer}>
+                            <Text style={styles.label} category='p2'>Pinned</Text>
+                        </View>
+                        {divided.pinned.map((item) => {
+                            return (
+                                <List
+                                    key={item.key}
+                                    id={item.key}
+                                    list={item.items}
+                                    lists={lists}
+                                    setLists={setLists}
+                                    navigation={navigation}
+                                />
+                            )
+                        })}
+                        <View style={styles.labelBottomContainer}>
+                            <Text style={styles.label} category='p2'>Other lists</Text>
+                        </View>
+                        {divided.unpinned.map((item) => {
+                            return (
+                                <List
+                                    key={item.key}
+                                    id={item.key}
+                                    list={item.items}
+                                    lists={lists}
+                                    setLists={setLists}
+                                    navigation={navigation}
+                                />
+                            )
+                        })}
+                    </>}
+                <Button
+                    onPress={() => backToTop()}
+                    style={styles.backToTop}
+                    accessoryLeft={ArrowUpIcon}
+                >
+                    Back to top
+                </Button>
             </ScrollView>}
         </SafeAreaView>
     )
@@ -107,4 +122,8 @@ const PlusIcon = (props) => (
 
 const SearchIcon = (props) => (
     <Icon name='search' fill='#ffffff' {...props} />
+);
+
+const ArrowUpIcon = (props) => (
+    <Icon name='arrow-upward' fill='#ffffff' {...props} />
 );

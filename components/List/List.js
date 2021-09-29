@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Moment from 'moment';
-import { Button, Text } from '@ui-kitten/components';
+import { Button, Text, Modal, Card } from '@ui-kitten/components';
 import { View, CheckBox } from 'react-native';
 import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
 import { replacer, setLists as updateStorage } from '../../AsyncStorageHandler';
@@ -11,6 +11,7 @@ import { styles } from './ListStyles';
 const List = ({ id, list, lists, setLists, navigation }) => {
 
     const [expanded, setExpanded] = useState(false);
+    const [visible, setVisible] = useState(false);
     const items = Array.from(list.items, ([key, items]) => ({ key, items }));
     const divided = items.reduce((array, item) => {
         array[item.items.completed ? 'completed' : 'uncompleted'].push(item);
@@ -129,7 +130,7 @@ const List = ({ id, list, lists, setLists, navigation }) => {
                         appearance='ghost'
                         accessoryLeft={DeleteIcon}
                         style={styles.button}
-                        onPress={() => deleteList()}
+                        onPress={() => setVisible(true)}
                     />
                     <Button
                         appearance='ghost'
@@ -143,8 +144,45 @@ const List = ({ id, list, lists, setLists, navigation }) => {
                     <Text category='c1' style={styles.text}>{formatDate()}</Text>
                 </View>
             </View>
+            <Modal
+                visible={visible}
+                backdropStyle={styles.backdrop}
+                onBackdropPress={() => setVisible(false)}
+            >
+                <Card
+                    header={Header}
+                    status='danger'
+                    disabled={true}
+                    style={{ margin: 20 }}
+                >
+                    <Text>Are you sure you want to delete {list.name}?</Text>
+                    <View style={styles.modalButtons}>
+                        <Button
+                            style={styles.modalButton}
+                            size='small'
+                            status='basic'
+                            onPress={() => setVisible(false)}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            onPress={() => deleteList()}
+                            style={[styles.modalButton, styles.buttonColor]}
+                            size='small'
+                        >
+                            Yes, delete
+                        </Button>
+                    </View>
+                </Card>
+            </Modal>
         </View>
     )
 }
 
 export default List;
+
+const Header = (props) => (
+    <View {...props}>
+        <Text category='h6'>Delete list</Text>
+    </View>
+);

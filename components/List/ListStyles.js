@@ -72,5 +72,19 @@ export const styles = StyleSheet.create({
     },
     lastUpdate: {
         flexDirection: 'column'
+    },
+    backdrop: {
+        backgroundColor: 'rgba(0, 0, 0, 0.85)',
+    },
+    modalButtons: {
+        marginTop: 25
+    },
+    modalButton: {
+        marginVertical: 5,
+        borderRadius: 10
+    },
+    buttonColor: {
+        backgroundColor: '#e53935',
+        borderWidth: 0
     }
 });

@@ -7,6 +7,13 @@ export const styles = StyleSheet.create({
         backgroundColor: primary,
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
     header: {
         display: 'flex',
         flexDirection: 'row',

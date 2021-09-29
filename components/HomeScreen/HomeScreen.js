@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SafeAreaView, ScrollView, View, TextInput } from 'react-native';
+import { SafeAreaView, ScrollView, View, TextInput, ActivityIndicator } from 'react-native';
 import { Button, Icon, Text } from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
 import { getLists, reviver } from '../../AsyncStorageHandler';
@@ -9,6 +9,7 @@ import List from '../List/List';
 export default HomeScreen = ({ navigation, route }) => {
 
     const [lists, setLists] = useState(new Map());
+    const [loaded, setLoaded] = useState(false);
     const [searchKey, setSearchKey] = useState('');
     const [showButton, setShowButton] = useState(false);
     const arrayLists = Array.from(lists, ([key, items]) => ({ key, items }));
@@ -24,7 +25,12 @@ export default HomeScreen = ({ navigation, route }) => {
             setLists(JSON.parse(route.params?.lists, reviver));
         }
         else
-            getLists().then((res) => { setLists(res); console.log('call'); });
+            getLists().then((res) => {
+                setLists(res);
+                setTimeout(() => {
+                    setLoaded(true);
+                });
+            }, 1000);
     }, [route.params?.lists]);
 
     const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
@@ -48,7 +54,7 @@ export default HomeScreen = ({ navigation, route }) => {
         scrollRef.current.scrollTo({ y: 0, animated: true });
     }
 
-    return (
+    return loaded ? (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <Button
@@ -150,6 +156,10 @@ export default HomeScreen = ({ navigation, route }) => {
                         </Text>
                     </View>)
             }
+        </SafeAreaView>
+    ) : (
+        <SafeAreaView style={styles.loadingContainer}>
+            <ActivityIndicator size='large' color='#FFF' />
         </SafeAreaView>
     )
 }

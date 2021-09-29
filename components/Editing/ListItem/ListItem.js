@@ -57,7 +57,7 @@ const ListItem = ({ id, value, deleteItem, items, setItems }) => {
                     onChangeText={setNewValue}
                     placeholder="New item..."
                     placeholderTextColor="white"
-                    style={{ color: 'white' }}
+                    style={styles.input}
                 />
                 <OverflowMenu
                     anchor={ToggleButton}

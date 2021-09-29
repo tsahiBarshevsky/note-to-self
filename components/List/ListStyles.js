@@ -67,6 +67,9 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    buttons: {
+        flexDirection: 'row'
+    },
     lastUpdate: {
         flexDirection: 'column'
     }

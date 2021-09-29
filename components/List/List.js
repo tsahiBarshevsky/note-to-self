@@ -124,18 +124,20 @@ const List = ({ id, list, lists, setLists, navigation }) => {
                 })}
             </View>
             <View style={styles.footer}>
-                <Button
-                    appearance='ghost'
-                    accessoryLeft={DeleteIcon}
-                    style={styles.button}
-                    onPress={() => deleteList()}
-                />
-                <Button
-                    appearance='ghost'
-                    accessoryLeft={EditIcon}
-                    style={styles.button}
-                    onPress={() => navigation.navigate('Editing', { id: id, title: list.name })}
-                />
+                <View style={styles.buttons}>
+                    <Button
+                        appearance='ghost'
+                        accessoryLeft={DeleteIcon}
+                        style={styles.button}
+                        onPress={() => deleteList()}
+                    />
+                    <Button
+                        appearance='ghost'
+                        accessoryLeft={EditIcon}
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Editing', { id: id, title: list.name })}
+                    />
+                </View>
                 <View style={styles.lastUpdate}>
                     <Text category='label' style={styles.label}>Last update:</Text>
                     <Text category='c1' style={styles.text}>{formatDate()}</Text>

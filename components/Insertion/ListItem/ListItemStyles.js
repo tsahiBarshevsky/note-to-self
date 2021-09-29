@@ -18,5 +18,10 @@ export const styles = StyleSheet.create({
     divider: {
         backgroundColor: '#ffffff33',
         marginBottom: 15
+    },
+    input: {
+        flex: 1,
+        color: 'white',
+        marginRight: 10
     }
 });

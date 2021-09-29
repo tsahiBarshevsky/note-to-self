@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { SafeAreaView, ScrollView, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, TextInput, View, Keyboard } from 'react-native';
 import { Button, Icon, Text } from '@ui-kitten/components';
 import uuid from 'react-native-uuid';
 import Toast from 'react-native-toast-message';
-import { Keyboard } from 'react-native';
 import { getLists, replacer, setLists } from '../../AsyncStorageHandler';
 import { styles } from './InsertionStyles';
 import ListItem from './ListItem/ListItem';

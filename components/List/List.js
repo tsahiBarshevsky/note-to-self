@@ -4,9 +4,9 @@ import { Button, Text } from '@ui-kitten/components';
 import { View, CheckBox } from 'react-native';
 import { Collapse, CollapseHeader, CollapseBody } from 'accordion-collapse-react-native';
 import { replacer, setLists as updateStorage } from '../../AsyncStorageHandler';
+import { ArrowSideIcon, ArrowDownIcon, DeleteIcon, PinOffIcon, PinIcon, EditIcon } from './Icons';
 import { styles } from './ListStyles';
 
-import { ArrowSideIcon, ArrowDownIcon, DeleteIcon, PinOffIcon, PinIcon } from './Icons';
 
 const List = ({ id, list, lists, setLists, navigation }) => {
 
@@ -130,12 +130,12 @@ const List = ({ id, list, lists, setLists, navigation }) => {
                     style={styles.button}
                     onPress={() => deleteList()}
                 />
-                {/* <Button
+                <Button
                     appearance='ghost'
                     accessoryLeft={EditIcon}
                     style={styles.button}
                     onPress={() => navigation.navigate('Editing', { id: id, title: list.name })}
-                /> */}
+                />
                 <View style={styles.lastUpdate}>
                     <Text category='label' style={styles.label}>Last update:</Text>
                     <Text category='c1' style={styles.text}>{formatDate()}</Text>

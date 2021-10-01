@@ -33,10 +33,11 @@ export const styles = StyleSheet.create({
     },
     input: {
         color: 'white',
-        borderRadius: 10,
         paddingHorizontal: 5,
         width: 200,
-        textAlign: 'center'
+        textAlign: 'center',
+        borderBottomColor: 'rgba(255, 255, 255, 0.2)',
+        borderBottomWidth: 1
     },
     addButton: {
         borderRadius: 50,
